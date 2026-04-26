@@ -26,7 +26,7 @@ res.status(400).json({message: err.message});
 
 };
 
-exports.getallDepartments = async(res,req)=>{
+exports.getallDepartments = async(req ,res)=>{
 
 try{
 
@@ -38,7 +38,16 @@ res.status(500).json({message:err.message});
 
 }
 
+}
 
-
-
+exports.deleteDepartment = async (req,res) => {
+    try{
+const deletedDepartment = await Department.findByIdAndDelete(req.params.id)
+if(!deletedDepartment){
+    res.status(404).json({message:"No employee matching that id"})
+}
+res.json({message:"Department deleted succefully"})
+    }catch(err){
+        res.status(500).json({message:"Deleting department failed"})
+    }
 }
